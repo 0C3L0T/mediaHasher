@@ -1,3 +1,15 @@
+//! # OHASH
+//! 
+//! ## Example:
+//! 
+//! ```
+//! use std::fs::File;
+//! let file = File::open("test/breakdance.avi").unwrap();
+//! let fsize = file.metadata().unwrap().len();
+//! let fhash = ohash::create_hash(file, fsize).unwrap();
+//! assert_eq!(fhash, "8e245d9679d31e12");
+//! ```
+
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom, BufReader};
 use std::mem;
@@ -5,17 +17,7 @@ use std::mem;
 /// Defines the size of the blocks used to create the hash
 pub const HASH_BLK_SIZE: u64 = 65536;
 
-/// Creates a hash for a file
-/// # Example:
-/// ```
-/// use std::fs::File;
-/// use media_hasher::{HASH_BLK_SIZE, create_hash};
-/// let file = File::open("breakdance.avi").unwrap();
-/// let fsize = file.metadata().unwrap().len();
-/// let fhash = create_hash(file, fsize).unwrap();
-/// assert_eq!(fhash, "8e245d9679d31e12");
-/// ```
-
+/// Create a hash from a file given a File struct and the size of the file
 pub fn create_hash(file: File, fsize: u64) -> Result<String, std::io::Error> {
 
     let mut buf = [0u8; 8];
@@ -46,3 +48,20 @@ pub fn create_hash(file: File, fsize: u64) -> Result<String, std::io::Error> {
     Ok(hash_string)
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_hash() {
+        let files = ["test/breakdance.avi", "test/dummy.bin"];
+        let hashes = ["8e245d9679d31e12", "61f7751fc2a72bfb"];
+
+        for (i, file) in files.iter().enumerate() {
+            let f = File::open(file).unwrap();
+            let fsize = f.metadata().unwrap().len();
+            let fhash = create_hash(f, fsize).unwrap();
+            assert_eq!(fhash, hashes[i]);
+        }
+    }
+}
