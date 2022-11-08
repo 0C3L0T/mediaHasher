@@ -2,7 +2,19 @@ use std::fs::File;
 use std::io::{Read, Seek, SeekFrom, BufReader};
 use std::mem;
 
+/// Defines the size of the blocks used to create the hash
 pub const HASH_BLK_SIZE: u64 = 65536;
+
+/// Creates a hash for a file
+/// # Example:
+/// ```
+/// use std::fs::File;
+/// use media_hasher::{HASH_BLK_SIZE, create_hash};
+/// let file = File::open("breakdance.avi").unwrap();
+/// let fsize = file.metadata().unwrap().len();
+/// let fhash = create_hash(file, fsize).unwrap();
+/// assert_eq!(fhash, "8e245d9679d31e12");
+/// ```
 
 pub fn create_hash(file: File, fsize: u64) -> Result<String, std::io::Error> {
 
