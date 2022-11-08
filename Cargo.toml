@@ -1,10 +1,10 @@
 [package]
 name = "ohash"
-liscense = "MIT"
+license = "MIT"
 description = "A simple media hasher based on code from the opensubtitles.org forum"
 version = "0.1.0"
 edition = "2021"
-keywoards = ["ohash", "media-hash", "hasher"]
+keywords = ["ohash", "media-hash", "hasher"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
