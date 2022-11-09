@@ -54,8 +54,8 @@ mod tests {
 
     #[test]
     fn test_create_hash() {
-        let files = ["test/breakdance.avi", "test/dummy.bin"];
-        let hashes = ["8e245d9679d31e12", "61f7751fc2a72bfb"];
+        let files = ["test/breakdance.avi"];
+        let hashes = ["8e245d9679d31e12"];
 
         for (i, file) in files.iter().enumerate() {
             let f = File::open(file).unwrap();
